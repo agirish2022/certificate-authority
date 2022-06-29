@@ -1,0 +1,110 @@
+import "tfstate-functions" as tfstate
+import "tfplan-functions" as plan
+import "strings"
+import "types"
+
+
+#Global Values
+ca_pool_tier_from_tfplan = {}		#Check google_privateca_ca_pool.tier value  “DEVOPS” or “ENTERPRISE”
+ca_pool_tier_from_tfstate = {}
+ca_pool_tier_merge_tfplan_tfstate = {}
+allowed_algorithms = ["RSA_PSS_2048_SHA256","RSA_PSS_3072_SHA256","RSA_PSS_4096_SHA256","RSA_PKCS1_2048_SHA256","RSA_PKCS1_3072_SHA256","RSA_PKCS1_4096_SHA256"]
+
+
+allPrivateCACertificateAuthorityInstances = plan.find_resources("google_privateca_certificate_authority")
+allPrivatecaCAPoolInstances = plan.find_resources("google_privateca_ca_pool")
+allCAPoolTfstateInstances = tfstate.find_resources("google_privateca_ca_pool")
+
+
+for allCAPoolTfstateInstances as address, rc {
+ capoolname = tfstate.evaluate_attribute(rc,"name")
+ capooltier = tfstate.evaluate_attribute(rc,"tier")
+ ca_pool_tier_from_tfstate[capoolname] = capooltier
+}
+
+print("-----Tfstate Map------")
+print(ca_pool_tier_from_tfstate)
+
+
+for allPrivatecaCAPoolInstances as address, rc {
+	ca_pool_tier_key = plan.evaluate_attribute(rc, "name")
+	ca_pool_tier_value = plan.evaluate_attribute(rc, "tier")
+	ca_pool_tier_from_tfplan[ca_pool_tier_key] = ca_pool_tier_value
+	print("ca_pool_tier details : ",ca_pool_tier_from_tfplan)
+}
+
+print("-----Tfplan Map------")
+print(ca_pool_tier_from_tfplan)
+
+#Merge both maps
+ca_pool_tier_merge_tfplan_tfstate = {}
+
+for ca_pool_tier_from_tfplan as address,rc {
+ca_pool_tier_merge_tfplan_tfstate[address] = rc
+}
+
+for ca_pool_tier_from_tfstate as address,rc {
+ca_pool_tier_merge_tfplan_tfstate[address] = rc
+}
+print("ca_pool_tier_merge_tfplan_tfstate",ca_pool_tier_merge_tfplan_tfstate)
+
+# Resource google_privateca_certificate_authority
+# google_privateca_certificate_authority.key_spec.cloud_kms_key_version - Ensure all CAs will be created using pre-existing CMEK
+# google_privateca_certificate_authority.key_spec.algorithm				- Ensure that all CA’s in DEVOPS tier are using one of the recommended algorithms
+
+violations_ca_kms_algorithm   = {}
+violations_ca_kms_key_version = {}
+for allPrivateCACertificateAuthorityInstances as address, rc {
+	#pool name that Certificate_Authority Instance is using 
+	ca_pool_name = plan.evaluate_attribute(rc, "pool")
+	if (not (types.type_of(ca_pool_tier_merge_tfplan_tfstate[ca_pool_name]) is "undefined")) and (ca_pool_tier_merge_tfplan_tfstate[ca_pool_name] == "ENTERPRISE") {
+		ca_private_kms_key_version = plan.evaluate_attribute(rc, "key_spec.0.cloud_kms_key_version")
+		print("ca_private_kms_key_version is ", ca_private_kms_key_version)
+		if (types.type_of(ca_private_kms_key_version) is "undefined") or (types.type_of(ca_private_kms_key_version) is "null") or (length(ca_private_kms_key_version) == 0) {
+			violations_ca_kms_key_version[address] = rc
+			print("The value for ca_private_kms_key_version in Resource " + address + " can't be null or undefined or empty string")
+		} else {
+			cryptoKeyVersionlist = strings.split(ca_private_kms_key_version, "/")
+			if length(cryptoKeyVersionlist) > 1 {
+				if not (cryptoKeyVersionlist[0] == "projects" and cryptoKeyVersionlist[2] == "locations" and cryptoKeyVersionlist[4] == "keyRings" and cryptoKeyVersionlist[6] == "cryptoKeys" and cryptoKeyVersionlist[8] == "cryptoKeyVersions") {
+					violations_ca_kms_key_version[address] = rc
+					print("CryptoKeyVersion must be in the format projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*")
+				}
+			} else {
+				violations_ca_kms_key_version[address] = rc
+				print("CryptoKeyVersion must be in the format projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*")
+			}
+		}
+	}else {
+		if (not (types.type_of(ca_pool_tier_merge_tfplan_tfstate[ca_pool_name]) is "undefined")) and (ca_pool_tier_merge_tfplan_tfstate[ca_pool_name] == "DEVOPS") {
+			ca_private_kms_algorithm = plan.evaluate_attribute(rc, "key_spec.0.algorithm")
+			if (ca_private_kms_algorithm not in allowed_algorithms){
+				violations_ca_kms_algorithm[address] = rc
+				print("Allowed algorithm are" + allowed_algorithms + "choose accordingly")
+			}
+		}
+	}		
+}
+GCP_CAS_CACMEK = rule { length(violations_ca_kms_key_version) is 0 }
+GCP_CAS_CAALGORITHM = rule { length(violations_ca_kms_algorithm) is 0 }
+
+# google_privateca_certificate_authority.gcs_bucket
+
+violations_ca_gcs_bucket = {}
+for allPrivateCACertificateAuthorityInstances as address, rc {
+	ca_private_gcs_bucket = plan.evaluate_attribute(rc, "gcs_bucket")
+    if types.type_of(ca_private_gcs_bucket) is "undefined" or types.type_of(ca_private_gcs_bucket) is "null" {
+		violations_ca_gcs_bucket[address] = rc
+		print("The value for ca_private_gcs_bucket in Resource " + address + " can't be null or undefined")	
+	}else {
+		if length(ca_private_gcs_bucket) == 0 {
+			violations_ca_gcs_bucket[address] = rc
+			print("Length of ca_private_gcs_bucket in Resource " + address + " must be greater then zero and ensure all CAs will be created using pre-existing Custom managed storage buckets.")		
+		}
+    }
+}
+
+GCP_CAS_CACMBKT = rule { length(violations_ca_gcs_bucket) is 0 }
+
+main = rule { GCP_CAS_CACMEK and GCP_CAS_CAALGORITHM and GCP_CAS_CACMBKT }
+
