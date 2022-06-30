@@ -1,0 +1,38 @@
+id = "run-sZoAo7BrpSWnPhpA"
+created_at = "2022-06-17T06:58:59.785Z"
+message = "Triggered via CLI"
+commit_sha = undefined
+speculative = false
+is_destroy = false
+refresh = true
+refresh_only = false
+replace_addrs = null
+target_addrs = null
+
+variables = {
+	"gcp_access_token": {
+		"category":  "terraform",
+		"sensitive": true,
+	},
+}
+
+organization = {
+	"name": "hcta-sentinel",
+}
+
+workspace = {
+	"auto_apply":        false,
+	"created_at":        "2022-06-17T06:39:31.939Z",
+	"description":       null,
+	"id":                "ws-BzPoXeJAB8adakFP",
+	"name":              "certificate_authority",
+	"tags":              [],
+	"vcs_repo":          null,
+	"working_directory": "",
+}
+
+cost_estimate = {
+	"delta_monthly_cost":    "0.0",
+	"prior_monthly_cost":    "0.0",
+	"proposed_monthly_cost": "0.0",
+}

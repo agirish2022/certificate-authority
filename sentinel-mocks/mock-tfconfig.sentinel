@@ -1,0 +1,524 @@
+import "strings"
+import "types"
+
+_modules = {
+	"root": {
+		"data":    {},
+		"modules": {},
+		"outputs": {},
+		"providers": {
+			"google": {
+				"alias": {
+					"": {
+						"config": {
+							"region": "us-central1",
+						},
+						"references": {
+							"access_token": [
+								"var.gcp_access_token",
+							],
+							"region": [],
+						},
+						"version": "3.85.0",
+					},
+				},
+				"config": {
+					"region": "us-central1",
+				},
+				"references": {
+					"access_token": [
+						"var.gcp_access_token",
+					],
+					"region": [],
+				},
+				"version": "3.85.0",
+			},
+			"google-beta": {
+				"alias": {
+					"": {
+						"config": {
+							"region": "us-central1",
+						},
+						"references": {
+							"access_token": [
+								"var.gcp_access_token",
+							],
+							"region": [],
+						},
+						"version": "",
+					},
+				},
+				"config": {
+					"region": "us-central1",
+				},
+				"references": {
+					"access_token": [
+						"var.gcp_access_token",
+					],
+					"region": [],
+				},
+				"version": "",
+			},
+		},
+		"resources": {
+			"google_kms_crypto_key": {
+				"example-asymmetric-sign-key": {
+					"config": {
+						"name":    "crypto-key-example",
+						"purpose": "ASYMMETRIC_SIGN",
+						"version_template": [
+							{
+								"algorithm":        "EC_SIGN_P384_SHA384",
+								"protection_level": "HSM",
+							},
+						],
+					},
+					"provisioners": null,
+					"references": {
+						"key_ring": [
+							"google_kms_key_ring.keyring.id",
+							"google_kms_key_ring.keyring",
+						],
+						"name":    [],
+						"purpose": [],
+						"version_template": [
+							{
+								"algorithm":        [],
+								"protection_level": [],
+							},
+						],
+					},
+				},
+			},
+			"google_kms_crypto_key_iam_binding": {
+				"privateca_sa_keyuser_signerverifier": {
+					"config": {
+						"crypto_key_id": "projects/keys-project/locations/us-central1/keyRings/key-ring/cryptoKeys/crypto-key",
+						"role":          "roles/cloudkms.signerVerifier",
+					},
+					"provisioners": null,
+					"references": {
+						"crypto_key_id": [],
+						"members": [
+							"google_project_service_identity.privateca_sa.email",
+							"google_project_service_identity.privateca_sa",
+						],
+						"role": [],
+					},
+				},
+				"privateca_sa_keyuser_viewer": {
+					"config": {
+						"crypto_key_id": "projects/keys-project/locations/us-central1/keyRings/key-ring/cryptoKeys/crypto-key",
+						"role":          "roles/viewer",
+					},
+					"provisioners": null,
+					"references": {
+						"crypto_key_id": [],
+						"members": [
+							"google_project_service_identity.privateca_sa.email",
+							"google_project_service_identity.privateca_sa",
+						],
+						"role": [],
+					},
+				},
+			},
+			"google_kms_key_ring": {
+				"keyring": {
+					"config": {
+						"location": "global",
+						"name":     "keyring-example",
+					},
+					"provisioners": null,
+					"references": {
+						"location": [],
+						"name":     [],
+					},
+				},
+			},
+			"google_privateca_ca_pool": {
+				"default": {
+					"config": {
+						"issuance_policy": [
+							{
+								"allowed_issuance_modes": [
+									{
+										"allow_config_based_issuance": true,
+										"allow_csr_based_issuance":    true,
+									},
+								],
+								"allowed_key_types": [
+									{
+										"elliptic_curve": [
+											{
+												"signature_algorithm": "ECDSA_P256",
+											},
+										],
+									},
+									{
+										"rsa": [
+											{
+												"max_modulus_size": 10,
+												"min_modulus_size": 5,
+											},
+										],
+									},
+								],
+								"baseline_values": [
+									{
+										"additional_extensions": [
+											{
+												"critical": true,
+												"object_id": [
+													{
+														"object_id_path": [
+															1,
+															7,
+														],
+													},
+												],
+												"value": "asdf",
+											},
+										],
+										"aia_ocsp_servers": [
+											"example.com",
+										],
+										"ca_options": [
+											{
+												"is_ca":                  true,
+												"max_issuer_path_length": 10,
+											},
+										],
+										"key_usage": [
+											{
+												"base_key_usage": [
+													{
+														"cert_sign":          false,
+														"content_commitment": true,
+														"crl_sign":           true,
+														"data_encipherment":  true,
+														"decipher_only":      true,
+														"digital_signature":  true,
+														"key_agreement":      true,
+														"key_encipherment":   false,
+													},
+												],
+												"extended_key_usage": [
+													{
+														"client_auth":      false,
+														"code_signing":     true,
+														"email_protection": true,
+														"server_auth":      true,
+														"time_stamping":    true,
+													},
+												],
+											},
+										],
+										"policy_ids": [
+											{
+												"object_id_path": [
+													1,
+													5,
+												],
+											},
+											{
+												"object_id_path": [
+													1,
+													5,
+													7,
+												],
+											},
+										],
+									},
+								],
+								"identity_constraints": [
+									{
+										"allow_subject_alt_names_passthrough": true,
+										"allow_subject_passthrough":           true,
+										"cel_expression": [
+											{
+												"expression": "subject_alt_names.all(san, san.type == DNS || san.type == EMAIL )",
+												"title":      "My title",
+											},
+										],
+									},
+								],
+								"maximum_lifetime": "50000s",
+							},
+						],
+						"labels": {
+							"foo": "bar",
+						},
+						"location": "us-central1",
+						"name":     "my-pool",
+						"publishing_options": [
+							{
+								"publish_ca_cert": false,
+								"publish_crl":     true,
+							},
+						],
+						"tier": "ENTERPRISE",
+					},
+					"provisioners": null,
+					"references": {
+						"issuance_policy": [
+							{
+								"allowed_issuance_modes": [
+									{
+										"allow_config_based_issuance": [],
+										"allow_csr_based_issuance":    [],
+									},
+								],
+								"allowed_key_types": [
+									{
+										"elliptic_curve": [
+											{
+												"signature_algorithm": [],
+											},
+										],
+									},
+									{
+										"rsa": [
+											{
+												"max_modulus_size": [],
+												"min_modulus_size": [],
+											},
+										],
+									},
+								],
+								"baseline_values": [
+									{
+										"additional_extensions": [
+											{
+												"critical": [],
+												"object_id": [
+													{
+														"object_id_path": [],
+													},
+												],
+												"value": [],
+											},
+										],
+										"aia_ocsp_servers": [],
+										"ca_options": [
+											{
+												"is_ca":                  [],
+												"max_issuer_path_length": [],
+											},
+										],
+										"key_usage": [
+											{
+												"base_key_usage": [
+													{
+														"cert_sign":          [],
+														"content_commitment": [],
+														"crl_sign":           [],
+														"data_encipherment":  [],
+														"decipher_only":      [],
+														"digital_signature":  [],
+														"key_agreement":      [],
+														"key_encipherment":   [],
+													},
+												],
+												"extended_key_usage": [
+													{
+														"client_auth":      [],
+														"code_signing":     [],
+														"email_protection": [],
+														"server_auth":      [],
+														"time_stamping":    [],
+													},
+												],
+											},
+										],
+										"policy_ids": [
+											{
+												"object_id_path": [],
+											},
+											{
+												"object_id_path": [],
+											},
+										],
+									},
+								],
+								"identity_constraints": [
+									{
+										"allow_subject_alt_names_passthrough": [],
+										"allow_subject_passthrough":           [],
+										"cel_expression": [
+											{
+												"expression": [],
+												"title":      [],
+											},
+										],
+									},
+								],
+								"maximum_lifetime": [],
+							},
+						],
+						"labels":   [],
+						"location": [],
+						"name":     [],
+						"publishing_options": [
+							{
+								"publish_ca_cert": [],
+								"publish_crl":     [],
+							},
+						],
+						"tier": [],
+					},
+				},
+			},
+			"google_privateca_certificate_authority": {
+				"default": {
+					"config": {
+						"certificate_authority_id": "my-certificate-authority",
+						"config": [
+							{
+								"subject_config": [
+									{
+										"subject": [
+											{
+												"common_name":  "Example Authority",
+												"organization": "Example, Org.",
+											},
+										],
+									},
+								],
+								"x509_config": [
+									{
+										"ca_options": [
+											{
+												"is_ca":                  true,
+												"max_issuer_path_length": 10,
+											},
+										],
+										"key_usage": [
+											{
+												"base_key_usage": [
+													{
+														"cert_sign": true,
+														"crl_sign":  true,
+													},
+												],
+												"extended_key_usage": [
+													{
+														"server_auth": false,
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
+						"gcs_bucket": "my-bucket",
+						"key_spec": [
+							{
+								"cloud_kms_key_version": "projects/keys-project/locations/us-central1/keyRings/key-ring/cryptoKeys/crypto-key/cryptoKeyVersions/1",
+							},
+						],
+						"location": "us-central1",
+						"pool":     "ca-pool",
+					},
+					"provisioners": null,
+					"references": {
+						"certificate_authority_id": [],
+						"config": [
+							{
+								"subject_config": [
+									{
+										"subject": [
+											{
+												"common_name":  [],
+												"organization": [],
+											},
+										],
+									},
+								],
+								"x509_config": [
+									{
+										"ca_options": [
+											{
+												"is_ca":                  [],
+												"max_issuer_path_length": [],
+											},
+										],
+										"key_usage": [
+											{
+												"base_key_usage": [
+													{
+														"cert_sign": [],
+														"crl_sign":  [],
+													},
+												],
+												"extended_key_usage": [
+													{
+														"server_auth": [],
+													},
+												],
+											},
+										],
+									},
+								],
+							},
+						],
+						"gcs_bucket": [],
+						"key_spec": [
+							{
+								"cloud_kms_key_version": [],
+							},
+						],
+						"location": [],
+						"pool":     [],
+					},
+				},
+			},
+			"google_project_service_identity": {
+				"privateca_sa": {
+					"config": {
+						"service": "privateca.googleapis.com",
+					},
+					"provisioners": null,
+					"references": {
+						"service": [],
+					},
+				},
+			},
+		},
+		"variables": {
+			"gcp_access_token": {
+				"default":     null,
+				"description": "GCP access token",
+			},
+		},
+	},
+}
+
+module_paths = [
+	[],
+]
+
+module = func(path) {
+	if types.type_of(path) is not "list" {
+		error("expected list, got", types.type_of(path))
+	}
+
+	if length(path) < 1 {
+		return _modules.root
+	}
+
+	addr = []
+	for path as p {
+		append(addr, "module")
+		append(addr, p)
+	}
+
+	return _modules[strings.join(addr, ".")]
+}
+
+data = _modules.root.data
+modules = _modules.root.modules
+providers = _modules.root.providers
+resources = _modules.root.resources
+variables = _modules.root.variables
+outputs = _modules.root.outputs

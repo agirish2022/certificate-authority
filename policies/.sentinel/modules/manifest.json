@@ -1,0 +1,16 @@
+{
+	"records": [
+		{
+			"key": "tfplan-functions",
+			"source": "../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "tfstate-functions",
+			"source": "../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		}
+	]
+}

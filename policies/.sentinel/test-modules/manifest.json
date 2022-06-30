@@ -1,0 +1,22 @@
+{
+	"records": [
+		{
+			"key": "test/privateca_certificate_authority_policy/null_privateca_certificate_authority_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/success_privateca_certificate_authority_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_certificate_authority_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		}
+	]
+}

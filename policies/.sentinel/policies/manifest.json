@@ -1,0 +1,16 @@
+{
+	"records": [
+		{
+			"key": "privateca_ca_pool_policy",
+			"source": "./privateca_ca_pool_policy.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/Certificate_Authority_final/policies/privateca_ca_pool_policy.sentinel"
+		},
+		{
+			"key": "privateca_certificate_authority_policy",
+			"source": "./privateca_certificate_authority_policy.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/Certificate_Authority_final/policies/privateca_certificate_authority_policy.sentinel"
+		}
+	]
+}
