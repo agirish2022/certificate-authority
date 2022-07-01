@@ -57,9 +57,10 @@ for allPrivateCACertificateAuthorityInstances as address, rc {
 	ca_pool_name = plan.evaluate_attribute(rc, "pool")
 	if (not (types.type_of(ca_pool_tier_merge_tfplan_tfstate[ca_pool_name]) is "undefined")) and (ca_pool_tier_merge_tfplan_tfstate[ca_pool_name] == "DEVOPS") {
 		ca_private_kms_algorithm = plan.evaluate_attribute(rc, "key_spec.0.algorithm")
-		if (ca_private_kms_algorithm not in allowed_algorithms){
+		print("ca_private_kms_algorithm : ", ca_private_kms_algorithm)
+		if (ca_private_kms_algorithm not in allowed_algorithms or types.type_of(ca_private_kms_algorithm) is "undefined" or types.type_of(ca_private_kms_algorithm) is "null" or length(ca_private_kms_algorithm) == 0 ){
 			violations_ca_kms_algorithm[address] = rc
-			print("Allowed algorithm are" + allowed_algorithms + "choose accordingly")
+			print("Allowed algorithm are", allowed_algorithms)
 		}
 	}
 			

@@ -8,6 +8,15 @@ mock "tfplan/v2" {
   }
 }
 
+module "tfstate-functions" {
+    source = "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel"
+}
+
+mock "tfstate/v2" {
+  module {
+    source = "./mock-tfstate-v2.sentinel"
+  }
+}
 
 
 test {

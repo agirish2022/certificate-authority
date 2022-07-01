@@ -1,10 +1,58 @@
 {
 	"records": [
 		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_devopsalg_alg_empty/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_devopsalg_notvalidalg/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
 			"key": "test/privateca_certificate_authority_policy/null_privateca_certificate_authority_policy/tfplan-functions",
 			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/null_privateca_certificate_authority_policy/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_certificate_authority_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/success_privateca_devopsalg/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_devopsalg_alg_notspecified/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_ca_pool_policy/failure_privateca_ca_pool_issue_block_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_devopsalg_alg_empty/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
 		},
 		{
 			"key": "test/privateca_certificate_authority_policy/success_privateca_certificate_authority_policy/tfplan-functions",
@@ -13,7 +61,55 @@
 			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
 		},
 		{
-			"key": "test/privateca_certificate_authority_policy/failure_privateca_certificate_authority_policy/tfplan-functions",
+			"key": "test/privateca_ca_pool_policy/null_privateca_ca_pool_issue_block_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_ca_pool_policy/success_privateca_ca_pool_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_certificate_authority_policy/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_devopsalg_alg_notspecified/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_ca_pool_policy/null_privateca_ca_pool_expression_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/success_privateca_certificate_authority_policy/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_ca_pool_policy/failure_privateca_ca_pool_expression_policy/tfplan-functions",
+			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/failure_privateca_devopsalg_notvalidalg/tfstate-functions",
+			"source": "../../../../common-functions/tfstate-functions/tfstate-functions.sentinel",
+			"sourceSum": "",
+			"dest": "/home/gavula/common-functions/tfstate-functions/tfstate-functions.sentinel"
+		},
+		{
+			"key": "test/privateca_certificate_authority_policy/success_privateca_devopsalg/tfplan-functions",
 			"source": "../../../../common-functions/tfplan-functions/tfplan-functions.sentinel",
 			"sourceSum": "",
 			"dest": "/home/gavula/common-functions/tfplan-functions/tfplan-functions.sentinel"

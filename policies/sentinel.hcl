@@ -14,7 +14,7 @@ mock "tfplan/v2" {
 
 mock "tfstate/v2" {
   module {
-    source = "/home/gavula/certificate-authority-service-updated2/mock-post-apply/mock-tfstate-v2-modified.sentinel"
+    source = "../sentinel-mocks/mock-tfstate-v2.sentinel"
   }
 }
 

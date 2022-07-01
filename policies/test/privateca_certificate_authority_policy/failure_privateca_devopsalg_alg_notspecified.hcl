@@ -4,7 +4,7 @@ module "tfplan-functions" {
 
 mock "tfplan/v2" {
   module {
-    source = "./mock-tfplan-privateca-certificate-authority-empty-string-failure.sentinel"
+    source = "./mock-tfpaln-privateca-devopsalg-alg-notspecified.sentinel"
   }
 }
 

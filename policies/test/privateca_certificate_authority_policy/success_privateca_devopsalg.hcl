@@ -4,7 +4,7 @@ module "tfplan-functions" {
 
 mock "tfplan/v2" {
   module {
-    source = "./mock-tfplan-privateca-certificate-authority-empty-string-failure.sentinel"
+    source = "./mock-tfpaln-privateca-devopsalg-success.sentinel"
   }
 }
 
@@ -18,8 +18,9 @@ mock "tfstate/v2" {
   }
 }
 
+
 test {
   rules = {
-    main = false
+    main = true
   }
 }
